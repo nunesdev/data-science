@@ -1,9 +1,4 @@
 import random
-import numpy as np
-import pandas as pd
-
-# Create data
-dataset = pd.read_csv('../data/census.csv')
 
 def reservoir_sampling(dataset, samples):
     stream = []
@@ -26,5 +21,5 @@ def reservoir_sampling(dataset, samples):
     return dataset.iloc[reservoir]
 
 # Apply reservoir sampling to the dataset
-df_reservoir_sampling = reservoir_sampling(dataset, 100)
-print(df_reservoir_sampling.shape)
+#df_reservoir_sampling = reservoir_sampling(dataset, 100)
+#print(df_reservoir_sampling.shape)
