@@ -1,5 +1,9 @@
 # 🏋️‍♂️ Data Analysis with Python – Gym Members
 
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](https://www.python.org/)  
+[![Pandas](https://img.shields.io/badge/Pandas-Analysis-success?logo=pandas)](https://pandas.pydata.org/)  
+[![Status](https://img.shields.io/badge/Status-Completed-brightgreen)](#)  
+
 > An **Exploratory Data Analysis (EDA)** project using **Python** and **Pandas** to explore the behavior of members from a fictional gym.
 
 ---
@@ -21,36 +25,36 @@ The file `gym_membership.csv` contains information about **1,000 members**, incl
 ## 🔍 Analysis Steps
 
 1. **Loading and initial inspection**
-    - Checked if DataFrame is empty
-    - Dimensions (rows and columns)
-    - Column names and data types (`dtypes`)
-    - Checked for data consistency
+   - Checked if DataFrame is empty
+   - Dimensions (rows and columns)
+   - Column names and data types (`dtypes`)
+   - Checked for data consistency
 
 2. **General information**
-    - Used `.info()` to check null values and data types
-    - Previewed samples with `.head()` and `.tail()`
+   - `.info()` to check null values and data types
+   - `.head()` and `.tail()` to preview data
 
 3. **Descriptive statistics**
-    - `.describe()` for numeric and categorical columns
-    - Found most frequent values (`mode()`)
+   - `.describe()` for numeric and categorical columns
+   - Most frequent values with `.mode()`
 
 4. **Specific calculations**
-    - 📅 **Average** number of training days per week
-    - 🏃‍♂️ **Average** visits per week
-    - 🎯 **Standard deviation** of age
-    - 🥤 **Number** of different favorite drinks
-    - 💪 **Most popular** group class
+   - 📅 Average training days per week  
+   - 🏃‍♂️ Average visits per week  
+   - 🎯 Standard deviation of age  
+   - 🥤 Number of different favorite drinks  
+   - 💪 Most popular group class  
 
-5. **Creation of summary DataFrame**
-    - Focused on the most relevant variables:
-        - `Age`
-        - `abonoment_type`
-        - `visit_per_week`
-        - `days_per_week`
-        - `avg_time_in_gym`
-        - `attend_group_lesson`
-        - `personal_training`
-        - `uses_sauna`
+5. **Summary DataFrame**
+   - Focused on relevant variables for future insights:
+     - `Age`
+     - `abonoment_type`
+     - `visit_per_week`
+     - `days_per_week`
+     - `avg_time_in_gym`
+     - `attend_group_lesson`
+     - `personal_training`
+     - `uses_sauna`
 
 ---
 
@@ -66,23 +70,36 @@ The file `gym_membership.csv` contains information about **1,000 members**, incl
 
 ---
 
+## 📈 Visualizations
+
+Here’s an example of how future visualizations can be added to enrich the analysis:
+
+<p align="center">
+  <img src="assets/age_distribution.png" alt="Age Distribution" width="500"/>
+</p>
+
+> Example: Distribution of gym members' ages.  
+*(This chart can be generated with Matplotlib/Seaborn and stored inside an `assets/` folder in your repo.)*
+
+---
+
 ## 🛠 Skills Acquired
 
 | Skill Area                        | Description |
 |-----------------------------------|-------------|
 | **Data manipulation (Pandas)**   | CSV reading, inspection, filtering, and DataFrame creation |
-| **Descriptive statistics**       | Calculating means, standard deviations, modes, counts |
-| **Data cleaning & organization** | Identifying null values, fixing inconsistent types |
-| **Analytical thinking**          | Interpreting metrics and defining relevant variables |
-| **Documentation**                | Structuring code and recording analysis steps |
+| **Descriptive statistics**       | Means, standard deviations, modes, counts |
+| **Data cleaning & organization** | Handling null values, fixing inconsistent data types |
+| **Analytical thinking**          | Interpreting metrics and identifying relevant variables |
+| **Documentation**                | Clear structure of analysis and reproducibility |
 
 ---
 
 ## 🚀 Next Steps
-- 📊 Create visualizations with **Matplotlib** and **Seaborn**
-- 📈 Analyze correlation between variables
-- 🧠 Build a predictive model for customer retention
-- 🔍 Segment customers based on behavior
+- 📊 Create interactive visualizations with **Matplotlib** and **Seaborn**
+- 📈 Correlation analysis between variables
+- 🧠 Predictive modeling for customer retention
+- 🔍 Customer segmentation based on behavior
 
 ---
 
