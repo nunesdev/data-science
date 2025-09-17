@@ -40,6 +40,19 @@ This repository showcases my learning journey in **data analysis, statistics, SQ
 
 ---
 
+### 🎵 Spotify Tracks Dataset – Data Analysis
+- **Description:** Analysis of **Spotify music tracks dataset** from Kaggle.  
+- **Dataset:** [Spotify Tracks Dataset](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset)  
+- **Tools:** Python, Pandas, Matplotlib, Seaborn.  
+- **Highlights:**
+  - Temporal insights: analysis of release years and popularity over time.  
+  - Genre-based comparisons (distribution and top genres).  
+  - Visualization of continuous variables (e.g., danceability, energy).  
+  - Key findings on how **musical features vary by genre and popularity**.  
+- [📎 Project README](./degree-infnet-brasil-2024-2027/python-spotify-tracks/README.md)
+
+---
+
 ## 🛠 Tech Stack
 
 | Area | Tools & Technologies |
