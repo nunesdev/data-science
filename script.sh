@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # Caminho do repositório Git
-REPO_DIR="/Volumes/Extreme SSD/www/data-science/degree-infnet-brasil-2024-2027"
+REPO_DIR="/Volumes/Extreme SSD/www/data-science/"
 LOGFILE="/Volumes/Extreme SSD/www/data-science/tmp/watchfolder.log"
 LOCKFILE="/Volumes/Extreme SSD/www/data-science/tmp/git_watch.lock"
+BRANCH="main" 
 
 cd "$REPO_DIR" || exit 1
 
@@ -17,7 +18,13 @@ fi
 date +%s > "$LOCKFILE"
 
 # Log de início
-echo "[$(date)] Mudança detectada, iniciando commit/push..." >> "$LOGFILE"
+echo "[$(date)] Mudança detectada. Iniciando git pull/commit/push..." >> "$LOGFILE"
+
+# 1. Garante que estamos na branch correta
+git checkout "$BRANCH" >> "$LOGFILE" 2>&1
+
+# 2. Atualiza com o remoto antes de subir algo novo
+git pull origin "$BRANCH" >> "$LOGFILE" 2>&1
 
 # Adiciona todos os arquivos
 git add -A
