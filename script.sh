@@ -3,7 +3,7 @@
 # Caminho do repositório Git
 REPO_DIR="/Volumes/Extreme SSD/www/data-science/degree-infnet-brasil-2024-2027"
 LOGFILE="/Volumes/Extreme SSD/www/data-science/degree-infnet-brasil-2024-2027/watchfolder.log"
-LOCKFILE="/tmp/git_watch.lock"
+LOCKFILE="/Volumes/Extreme SSD/www/data-science/tmp/git_watch.lock"
 
 cd "$REPO_DIR" || exit 1
 
