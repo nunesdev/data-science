@@ -1,3 +1,21 @@
+# 📊 Data Science & AI Portfolio – Instituto Infnet (2024–2027)
+
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](https://www.python.org/)  
+[![SQL](https://img.shields.io/badge/SQL-PostgreSQL-informational?logo=postgresql)](https://www.postgresql.org/)  
+[![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-success?logo=pandas)](https://pandas.pydata.org/)  
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-Visualizations-orange?logo=plotly)](https://matplotlib.org/)  
+[![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)](#)  
+
+---
+
+## 👨‍💻 About Me
+
+Hi, I’m **Bruno Reis**, a **software developer with 15+ years of experience**, currently pursuing a **Bachelor’s Degree in Data Science & Artificial Intelligence** at **Instituto Infnet, Brazil**.  
+
+This repository showcases my learning journey in **data analysis, statistics, SQL, and machine learning foundations**, combining my background in programming with a new focus on **data-driven problem solving**.
+
+---
+
 ## 📂 Featured Projects
 
 ### 🏋️‍♂️ Data Analysis with Python – Gym Members
