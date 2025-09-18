@@ -1,4 +1,4 @@
-# 📊 Data Science & AI Portfolio – Instituto Infnet (2024–2027)
+# 📊 Data Science & AI Portfolio 
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](https://www.python.org/)  
 [![SQL](https://img.shields.io/badge/SQL-PostgreSQL-informational?logo=postgresql)](https://www.postgresql.org/)  
