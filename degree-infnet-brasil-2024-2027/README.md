@@ -36,7 +36,7 @@ This repository showcases my learning journey in **data analysis, statistics, SQ
   - Score segmentation & demographic analysis.  
   - Correlation between Math, Reading & Writing.  
   - Test preparation courses improve performance across all subjects.  
-- [📎 Project README](./degree-infnet-brasil-2024-2027/exploratory-data-with-sql)
+- [📎 Project README](https://github.com/nunesdev/data-science/tree/main/degree-infnet-brasil-2024-2027/exploratory-data-with-sql)
 
 ---
 
@@ -49,7 +49,7 @@ This repository showcases my learning journey in **data analysis, statistics, SQ
   - Genre-based comparisons (distribution and top genres).  
   - Visualization of continuous variables (e.g., danceability, energy).  
   - Key findings on how **musical features vary by genre and popularity**.  
-- [📎 Project README](./ddegree-infnet-brasil-2024-2027/spotify-dataset-analysis-with-python)
+- [📎 Project README](https://github.com/nunesdev/data-science/tree/main/degree-infnet-brasil-2024-2027/spotify-dataset-analysis-with-python)
 
 ---
 
@@ -61,7 +61,7 @@ This repository showcases my learning journey in **data analysis, statistics, SQ
   - Regional sales ranking and performance breakdown.  
   - Customer purchase history tracking with window functions.  
   - Top 5 customers with highest profit growth (using `LAG()` and month-over-month comparison).  
-- [📎 Project README](./degree-infnet-brasil-2024-2027/superstore-sales-analysis-with-sql)
+- [📎 Project README](https://github.com/nunesdev/data-science/tree/main/degree-infnet-brasil-2024-2027/superstore-sales-analysis-with-sql)
 
 ---
 
