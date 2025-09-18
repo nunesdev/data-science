@@ -25,7 +25,7 @@ This repository showcases my learning journey in **data analysis, statistics, SQ
   - Descriptive statistics & distribution analysis.  
   - Behavior analysis (training days, visits, group classes, services).  
   - Key insights: avg. **2.68 training days/week**, **36 favorite drinks**, most popular class **BodyPump**.  
-- [📎 Project README](./degree-infnet-brasil-2024-2027/python-gym-members/README.md)
+- [📎 Project README](./degree-infnet-brasil-2024-2027/exploratory-data-analysis-tp1)
 
 ---
 
@@ -36,7 +36,7 @@ This repository showcases my learning journey in **data analysis, statistics, SQ
   - Score segmentation & demographic analysis.  
   - Correlation between Math, Reading & Writing.  
   - Test preparation courses improve performance across all subjects.  
-- [📎 Project README](./degree-infnet-brasil-2024-2027/sql-student-performance/README.md)
+- [📎 Project README](./degree-infnet-brasil-2024-2027/exploratory-data-with-sql)
 
 ---
 
@@ -49,7 +49,19 @@ This repository showcases my learning journey in **data analysis, statistics, SQ
   - Genre-based comparisons (distribution and top genres).  
   - Visualization of continuous variables (e.g., danceability, energy).  
   - Key findings on how **musical features vary by genre and popularity**.  
-- [📎 Project README](./degree-infnet-brasil-2024-2027/python-spotify-tracks/README.md)
+- [📎 Project README](./ddegree-infnet-brasil-2024-2027/spotify-dataset-analysis-with-python)
+
+---
+
+### 🏬 Superstore Sales Analysis with SQL
+- **Description:** Sales and profitability analysis of the **Superstore dataset** using SQL queries.  
+- **Tools:** SQL (PostgreSQL), Pandas (for result handling), Matplotlib (for charts).  
+- **Highlights:**
+  - Time-based sales trends with `DATE_TRUNC()`.  
+  - Regional sales ranking and performance breakdown.  
+  - Customer purchase history tracking with window functions.  
+  - Top 5 customers with highest profit growth (using `LAG()` and month-over-month comparison).  
+- [📎 Project README](./degree-infnet-brasil-2024-2027/superstore-sales-analysis-with-sql)
 
 ---
 
