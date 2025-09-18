@@ -25,7 +25,7 @@ This repository showcases my learning journey in **data analysis, statistics, SQ
   - Descriptive statistics & distribution analysis.  
   - Behavior analysis (training days, visits, group classes, services).  
   - Key insights: avg. **2.68 training days/week**, **36 favorite drinks**, most popular class **BodyPump**.  
-- [📎 Project README](./degree-infnet-brasil-2024-2027/exploratory-data-analysis-tp1)
+- [📎 Project README](https://github.com/nunesdev/data-science/tree/main/degree-infnet-brasil-2024-2027/exploratory-data-analysis-tp1)
 
 ---
 
