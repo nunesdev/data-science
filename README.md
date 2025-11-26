@@ -18,6 +18,12 @@ This repository showcases my learning journey in **data analysis, statistics, SQ
 
 ## 📂 Featured Projects
 
+### 🏘️ [Data Quality Assessment - King County (TP2)](./kouse_sales_prediction)
+**Description:** Comprehensive data quality diagnosis of the `kc_house_data.csv` dataset. The project focuses on distinguishing between actual data errors and natural outliers within the real estate market.
+- **Key Techniques:** Comparative statistical outlier detection (IQR, MAD, Z-Score), referential integrity verification, and temporal logical consistency validation.
+- **Stack:** Python, Pandas, NumPy, Seaborn.
+- **Highlight:** Demonstrated that the MAD method is ~9x more sensitive than Z-Score for long-tail data distributions (real estate).
+
 ### 🏋️‍♂️ Data Analysis with Python – Gym Members
 - **Description:** Exploratory Data Analysis (EDA) of a fictional gym membership dataset (1,000 members).  
 - **Tools:** Python, Pandas.  
