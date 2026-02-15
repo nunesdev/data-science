@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](https://www.python.org/)  
 [![SQL](https://img.shields.io/badge/SQL-PostgreSQL-informational?logo=postgresql)](https://www.postgresql.org/)  
 [![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-success?logo=pandas)](https://pandas.pydata.org/)  
-[![Matplotlib](https://img.shields.io/badge/Matplotlib-Visualizations-orange?logo=plotly)](https://matplotlib.org/)  
+[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Machine%20Learning-orange?logo=scikitlearn)](https://scikit-learn.org/)  
 [![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)](#)  
 
 ---
@@ -12,91 +12,33 @@
 
 Hi, I’m **Bruno Reis**, a **software developer with 15+ years of experience**, currently pursuing a **Bachelor’s Degree in Data Science & Artificial Intelligence** at **Instituto Infnet, Brazil**.  
 
-This repository showcases my learning journey in **data analysis, statistics, SQL, and machine learning foundations**, combining my background in programming with a new focus on **data-driven problem solving**.
+This repository showcases my journey in bridging my software engineering background with data-driven problem solving, focusing on statistical analysis, data engineering, and machine learning.
 
 ---
 
 ## 📂 Featured Projects
 
-### 🐧 [Feature Engineering & Transformation - Palmer Penguins](./palmer-penguins)
-**Description:** A comprehensive study on data preparation for Machine Learning.
-- **Highlights:** Discretization, Power Transformations, Scikit-Learn `FunctionTransformer`, and L2-Norm (Ridge) regularization.
-- **Goal:** Exploring how data "shapes" affect model performance.
+### 🐧 [Machine Learning Fundamentals - Palmer Penguins](./palmer-penguins-classification)
+**Description:** Introduction to supervised learning through classification tasks. 
+- **Key Techniques:** KNN algorithm (Instance-based learning), Binary vs. Multiclass classification, and performance evaluation using Accuracy and Confusion Matrices.
+- **Goal:** Identifying species based on biological measurements.
 
-### 🏘️ [Data Quality Assessment - King County](./kouse_sales_prediction)
-**Description:** Technical diagnosis of the `kc_house_data.csv` dataset to identify statistical anomalies and logical inconsistencies.
-- **Key Techniques:** Outlier detection (IQR, MAD, Z-Score) and data integrity validation.
-
-### 🏬 [Superstore Sales Analysis with SQL](./superstore-sales)
-**Description:** Analysis of sales and profitability using PostgreSQL.
-- **Highlights:** Time-series trends, window functions (`LAG`), and performance ranking.
-
-### 🎵 [Spotify Dataset Analysis with Python](./spotify-analysis)
-**Description:** EDA of music popularity patterns using Seaborn and Pandas.
-
----
-
-## 🛠 Tech Stack
-| Area | Tools |
-|------|-------|
-| **Languages** | Python, SQL (PostgreSQL) |
-| **Engineering** | Feature Transformation, Binning, Regularization |
-| **Libraries** | Scikit-Learn, Pandas, NumPy, Matplotlib, Seaborn |
+### 🧪 [Feature Engineering & Transformation - Palmer Penguins](./palmer-penguins-transformation)
+**Description:** A deep dive into the mathematical preparation of data for Machine Learning.
+- **Key Techniques:** Data discretization (Binning), Power Transformations (Yeo-Johnson), Scikit-Learn `FunctionTransformer` pipelines, and L2-Norm (Ridge) regularization.
+- **Goal:** Transforming raw data into optimized feature vectors.
 
 ### 🏘️ [Data Quality Assessment - King County (TP2)](./kouse_sales_prediction)
-**Description:** Comprehensive data quality diagnosis of the `kc_house_data.csv` dataset. The project focuses on distinguishing between actual data errors and natural outliers within the real estate market.
-- **Key Techniques:** Comparative statistical outlier detection (IQR, MAD, Z-Score), referential integrity verification, and temporal logical consistency validation.
-- **Stack:** Python, Pandas, NumPy, Seaborn.
-- **Highlight:** Demonstrated that the MAD method is ~9x more sensitive than Z-Score for long-tail data distributions (real estate).
+**Description:** Comprehensive data quality diagnosis of the `kc_house_data.csv` dataset.
+- **Key Techniques:** Outlier detection (IQR, MAD, Z-Score), referential integrity verification, and logical consistency validation.
 
-- [📎 Project README](https://github.com/nunesdev/data-science/tree/main/kouse_sales_prediction)
+### 🏬 [Superstore Sales Analysis with SQL](./superstore-sales-analysis-with-sql)
+**Description:** Sales and profitability analysis using SQL queries (PostgreSQL).
+- **Highlights:** Time-based trends with `DATE_TRUNC()`, regional performance rankings, and customer growth tracking with window functions (`LAG`).
 
----
-
-### 🏋️‍♂️ Data Analysis with Python – Gym Members
-- **Description:** Exploratory Data Analysis (EDA) of a fictional gym membership dataset (1,000 members).  
-- **Tools:** Python, Pandas.  
-- **Highlights:**
-  - Descriptive statistics & distribution analysis.  
-  - Behavior analysis (training days, visits, group classes, services).  
-  - Key insights: avg. **2.68 training days/week**, **36 favorite drinks**, most popular class **BodyPump**.  
-- [📎 Project README](https://github.com/nunesdev/data-science/tree/main/degree-infnet-brasil-2024-2027/exploratory-data-analysis-tp1)
-
----
-
-### 🎓 Student Performance Analysis with SQL
-- **Description:** SQL-based analysis of student performance across Math, Reading, and Writing.  
-- **Tools:** SQL, Matplotlib (for visualizations).  
-- **Highlights:**
-  - Score segmentation & demographic analysis.  
-  - Correlation between Math, Reading & Writing.  
-  - Test preparation courses improve performance across all subjects.  
-- [📎 Project README](https://github.com/nunesdev/data-science/tree/main/degree-infnet-brasil-2024-2027/exploratory-data-with-sql)
-
----
-
-### 🎵 Spotify Tracks Dataset – Data Analysis
-- **Description:** Analysis of **Spotify music tracks dataset** from Kaggle.  
-- **Dataset:** [Spotify Tracks Dataset](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset)  
-- **Tools:** Python, Pandas, Matplotlib, Seaborn.  
-- **Highlights:**
-  - Temporal insights: analysis of release years and popularity over time.  
-  - Genre-based comparisons (distribution and top genres).  
-  - Visualization of continuous variables (e.g., danceability, energy).  
-  - Key findings on how **musical features vary by genre and popularity**.  
-- [📎 Project README](https://github.com/nunesdev/data-science/tree/main/degree-infnet-brasil-2024-2027/spotify-dataset-analysis-with-python)
-
----
-
-### 🏬 Superstore Sales Analysis with SQL
-- **Description:** Sales and profitability analysis of the **Superstore dataset** using SQL queries.  
-- **Tools:** SQL (PostgreSQL), Pandas (for result handling), Matplotlib (for charts).  
-- **Highlights:**
-  - Time-based sales trends with `DATE_TRUNC()`.  
-  - Regional sales ranking and performance breakdown.  
-  - Customer purchase history tracking with window functions.  
-  - Top 5 customers with highest profit growth (using `LAG()` and month-over-month comparison).  
-- [📎 Project README](https://github.com/nunesdev/data-science/tree/main/degree-infnet-brasil-2024-2027/superstore-sales-analysis-with-sql)
+### 🎵 [Spotify Dataset Analysis with Python](./spotify-dataset-analysis-with-python)
+**Description:** Exploratory Data Analysis (EDA) of music popularity patterns.
+- **Highlights:** Correlation analysis and genre distribution visualization using Seaborn and Matplotlib.
 
 ---
 
@@ -104,21 +46,21 @@ This repository showcases my learning journey in **data analysis, statistics, SQ
 
 | Area | Tools & Technologies |
 |------|----------------------|
-| **Programming** | Python (Pandas, Matplotlib, Seaborn), SQL |
-| **Data Handling** | Data cleaning, exploratory data analysis, descriptive statistics |
+| **Programming** | Python (Pandas, NumPy, Scikit-Learn), SQL |
+| **Data Engineering** | Feature Transformation, Binning, Data Cleaning, Regularization |
+| **Mathematics/ML** | Supervised Learning, Statistical Distributions, Linear Algebra foundations |
 | **Visualization** | Matplotlib, Seaborn |
-| **Soft Skills** | Analytical thinking, problem-solving, data storytelling |
 | **Background** | 15+ years in software development |
 
 ---
 
 ## 🚀 Next Steps
 
-- Expand with projects in **Machine Learning** and **Neural Networks**.  
-- Apply predictive modeling to datasets (e.g., customer churn, education outcomes).  
-- Build **interactive dashboards** and advanced data visualizations.  
+- Expand with projects in **Unsupervised Learning** (Clustering).  
+- Deepen studies in **Neural Networks** and **Deep Learning**.  
+- Implement **Advanced Feature Selection** techniques.
+- Build interactive dashboards with Streamlit.
 
 ---
 
-✍️ Author: **Bruno Reis**  
-📅 Portfolio started in **2025**  
+✍️ *Bruno Nunes Reis*
