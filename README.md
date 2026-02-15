@@ -18,35 +18,30 @@ This repository showcases my learning journey in **data analysis, statistics, SQ
 
 ## 📂 Featured Projects
 
-# Feature Engineering & Data Transformation - Palmer Penguins
+### 🐧 [Feature Engineering & Transformation - Palmer Penguins](./palmer-penguins)
+**Description:** A comprehensive study on data preparation for Machine Learning.
+- **Highlights:** Discretization, Power Transformations, Scikit-Learn `FunctionTransformer`, and L2-Norm (Ridge) regularization.
+- **Goal:** Exploring how data "shapes" affect model performance.
 
-This project documents a series of 12 practical exercises focused on **Feature Engineering** and **Data Transformation**. Using the *Palmer Penguins* dataset, I explored the mathematical foundations of data preparation, from basic algebra to advanced Scikit-Learn pipelines.
+### 🏘️ [Data Quality Assessment - King County](./kouse_sales_prediction)
+**Description:** Technical diagnosis of the `kc_house_data.csv` dataset to identify statistical anomalies and logical inconsistencies.
+- **Key Techniques:** Outlier detection (IQR, MAD, Z-Score) and data integrity validation.
 
-## 🧠 Exercises and Implementation
+### 🏬 [Superstore Sales Analysis with SQL](./superstore-sales)
+**Description:** Analysis of sales and profitability using PostgreSQL.
+- **Highlights:** Time-series trends, window functions (`LAG`), and performance ranking.
 
-### 1. Understanding Features
-Features are the "eyes" of the model. In this dataset, variables like `bill_length_mm` and `flipper_length_mm` provide the predictive power needed to distinguish between species.
+### 🎵 [Spotify Dataset Analysis with Python](./spotify-analysis)
+**Description:** EDA of music popularity patterns using Seaborn and Pandas.
 
-### 2. Scalars, Vectors, and Spaces
-* **Scalar:** A single value (e.g., body mass of 3750g).
-* **Vector:** A row of data representing a single penguin.
-* **Feature Space:** The multi-dimensional map where the model clusters similar penguins.
+---
 
-### 3 & 4. Fixed vs. Variable Binning (Discretization)
-I implemented two types of discretization for `body_mass_g`:
-* **Fixed Bins:** Rigid intervals (e.g., every 1000g).
-* **Variable Bins (Quantiles):** Intervals adjusted to ensure each group has the same number of penguins, which is better for balanced model training.
-
-### 5 & 6. Power and Function Transformers
-I used `FunctionTransformer` for custom log-scaling and `PowerTransformer` (Yeo-Johnson) to stabilize variance.
-
-
-```python
-# Applying PowerTransformer to normalize the distribution
-from sklearn.preprocessing import PowerTransformer
-pt = PowerTransformer()
-# Transforming the flipper length to reach a Gaussian-like shape
-flipper_transformed = pt.fit_transform(df[['flipper_length_mm']])
+## 🛠 Tech Stack
+| Area | Tools |
+|------|-------|
+| **Languages** | Python, SQL (PostgreSQL) |
+| **Engineering** | Feature Transformation, Binning, Regularization |
+| **Libraries** | Scikit-Learn, Pandas, NumPy, Matplotlib, Seaborn |
 
 ### 🏘️ [Data Quality Assessment - King County (TP2)](./kouse_sales_prediction)
 **Description:** Comprehensive data quality diagnosis of the `kc_house_data.csv` dataset. The project focuses on distinguishing between actual data errors and natural outliers within the real estate market.
