@@ -14,10 +14,18 @@ st.markdown("Consolidação de votos (BU) e análise (Dados Abertos TSE).")
 # FUNÇÃO PARA ENCONTRAR O ARQUIVO (Evita Erro no Deploy Cloud)
 # ==========================================
 def buscar_arquivo(nome_arquivo):
-    if os.path.exists(f"{nome_arquivo}"):
-        return f"{nome_arquivo}"
-    elif os.path.exists(nome_arquivo):
+    # Tenta usar o caminho absoluto baseado no local do script (melhor para Streamlit Cloud)
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+            
+    # Caminho 2: Raiz usando caminho absoluto
+    caminho_raiz_abs = os.path.join(base_dir, nome_arquivo)
+    if os.path.exists(caminho_raiz_abs):
+        return caminho_raiz_abs
+                
+    # Caminho 4: Relativo direto raiz (fallback)
+    if os.path.exists(nome_arquivo):
         return nome_arquivo
+        
     return None
 
 # ==========================================
