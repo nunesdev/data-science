@@ -7,7 +7,7 @@ import os
 # Configuração inicial da página
 st.set_page_config(page_title="Apuração Eleitoral TSE", layout="wide")
 
-st.title("📊 Painel de Apuração e Inteligência Eleitoral")
+st.title("📊 Eleicão 2026 - Palmas - Por Região")
 st.markdown("Consolidação de votos (BU) e análise (Dados Abertos TSE).")
 
 # ==========================================
@@ -285,35 +285,30 @@ with aba_analise:
     st.markdown("""
     * **Executivo:** Voto fortemente conservador para Presidente (em torno de 60% para Bolsonaro) e pouquíssimos brancos/nulos. 
     * **Legislativo:** Votação totalmente pulverizada. Nenhum candidato a deputado domina a região (o líder teve só 8%). 
-    * **Como atuar:** É a área do "voto de opinião". Pautas ideológicas, infraestrutura e marketing digital rendem mais que o tradicional corpo a corpo e "caciquismo".
     """)
     
     st.header("Taquaruçu", anchor="taquarucu")
     st.markdown("""
     * **Legislativo Estadual:** Reduto fechado do Léo Barbosa, que levou mais de 45% dos votos sozinho. Entrar aqui exige desconstruir a base dele.
     * **Legislativo Federal:** Os eleitores preferiram nomes com forte atuação municipal direta (Janad e Cinthia).
-    * **Como atuar:** O eleitorado é muito engajado (baixa abstenção de 15%), mas o voto obedece muito a lideranças comunitárias bem estabelecidas.
     """)
 
     st.header("Jardim Taquari", anchor="jardim-taquari")
     st.markdown("""
     * **Rejeição em alta:** É a região com maior taxa de abstenção (quase 20%) e alto volume de brancos/nulos para deputados. O eleitor aqui está mais distante da política tradicional.
     * **Disputa:** A eleição presidencial foi a mais acirrada da cidade (Bolsonaro 50% x Lula 43%).
-    * **Como atuar:** Foco em mobilização pesada de rua, logística no dia da eleição e pautas fortemente sociais e assistenciais.
     """)
 
     st.header("Aurenys", anchor="aurenys")
     st.markdown("""
     * **Força Local:** Reduto fortíssimo da Janad Valcari para federal (quase 18%). 
     * **Perfil do Eleitor:** As Aurenys preferem quem tem histórico de trabalho nos bairros, como vereadores e líderes comunitários. Políticos "de gabinete" não vingam.
-    * **Como atuar:** Exige "sola de sapato". Corpo a corpo pesado, reuniões em casas, caminhadas no comércio da Av. Tocantins e alianças de bairro.
     """)
 
     st.header("Taquaralto", anchor="taquaralto")
     st.markdown("""
     * **Perfil Misto:** Abstenção alta (18%), mas com voto presidencial majoritariamente conservador (61%), bem parecido com o centro da cidade.
     * **Legislativo:** Disputa bem diluída. Vanda Monteiro e Débora Guedes foram as mais votadas, mas sem nenhum domínio absoluto (ficaram abaixo de 10%).
-    * **Como atuar:** Por ser o polo econômico do sul da capital, propostas voltadas ao comércio local, infraestrutura e segurança pública têm o maior apelo.
     """)
 
 # ------------------------------------------
