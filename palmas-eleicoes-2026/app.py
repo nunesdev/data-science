@@ -6,7 +6,7 @@ import re
 # Configuração inicial da página
 st.set_page_config(page_title="Apuração Eleitoral TSE", layout="wide")
 
-st.title("📊 Painel de Apuração Eleitoral - Palmas 2026")
+st.title("📊 Painel de Apuração e Inteligência Eleitoral")
 st.markdown("Consolidação de votos (BU) e análise (Dados Abertos TSE).")
 
 # ==========================================
@@ -38,17 +38,17 @@ try:
     df_votos = load_votos()
     df_perfil = load_perfil()
 except FileNotFoundError as e:
-    st.error(f"Ficheiro não encontrado: {e}. Certifique-se de que os dois ficheiros CSV estão na mesma pasta.")
+    st.error(f"Ficheiro não encontrado: {e}. Certifique-se de que os arquivos CSV estão dentro da pasta 'data/'.")
     st.stop()
 
-# Criar dicionário global de mapeamento de escolas (Código -> Nome da Escola)
+# Criar dicionário global de mapeamento de escolas
 if 'NR_LOCAL_VOTACAO' in df_perfil.columns and 'NM_LOCAL_VOTACAO' in df_perfil.columns:
     mapa_escolas = df_perfil[['NR_LOCAL_VOTACAO', 'NM_LOCAL_VOTACAO']].drop_duplicates().set_index('NR_LOCAL_VOTACAO')['NM_LOCAL_VOTACAO'].to_dict()
 else:
     mapa_escolas = {}
 
 # ==========================================
-# BARRA LATERAL (Filtros Compartilhados)
+# BARRA LATERAL E LÓGICA DE REGIÕES
 # ==========================================
 st.sidebar.header("Filtros de Análise")
 
@@ -69,60 +69,50 @@ regiao_selecionada = st.sidebar.selectbox("Região da Cidade:", options=regioes_
 df_v_filtrado = df_votos.copy()
 df_p_filtrado = df_perfil.copy()
 
-# Aplicação da lógica de filtragem por Região Geográfica
 if regiao_selecionada == "Plano Diretor Norte":
     secoes = ['275', '281', '286', '291', '298', '306', '313', '321', '516', '393', '394', '397', '416', '424', '455', '521', '694', '726', '194', '245', '265', '269', '552', '738', '158', '159', '160', '161', '162', '163', '164', '165', '166', '182', '517', '105', '117', '126', '136', '142', '221', '254', '332', '389', '526', '201', '204', '205', '207', '216', '231', '250', '257', '530', '150', '151', '152', '153', '154', '155', '156', '157', '187', '404', '422', '534', '637', '667', '109', '119', '127', '134', '143', '476', '544', '589', '140', '145', '146', '147', '148', '149', '546', '432', '441', '444', '457', '493', '550', '609', '640', '196', '234', '260', '352', '359', '403', '492', '556', '607', '626', '652', '371', '430', '462', '557', '600', '633', '663', '711', '733', '195', '230', '261', '437', '495', '562', '599', '622', '662', '710', '742', '203', '210', '247', '255', '448', '456', '486', '564', '189', '228', '271', '287', '308', '324', '496', '571', '354', '376', '406', '425', '452', '474', '574', '193', '215', '224', '248', '256', '266', '576', '623', '90', '91', '100', '101', '106', '325', '328', '337', '345', '361', '377', '577', '700', '715', '739']
     df_v_filtrado = df_v_filtrado[df_v_filtrado['NR_SECAO'].isin(secoes)]
     df_p_filtrado = df_p_filtrado[df_p_filtrado['NR_SECAO'].isin(secoes)]
-    st.sidebar.success(f"📍 Exibindo {len(secoes)} secções do Plano Norte.")
 
 elif regiao_selecionada == "Plano Diretor Sul":
     secoes = ['128', '129', '132', '137', '184', '186', '449', '466', '481', '520', '338', '360', '522', '592', '657', '188', '208', '223', '240', '264', '273', '523', '587', '612', '645', '651', '343', '362', '382', '391', '428', '524', '588', '344', '365', '426', '504', '525', '660', '87', '99', '103', '112', '125', '139', '477', '527', '653', '66', '78', '83', '102', '120', '133', '144', '529', '598', '4', '35', '41', '45', '49', '57', '63', '84', '274', '531', '595', '636', '722', '736', '671', '672', '673', '677', '681', '682', '683', '706', '717', '734', '349', '366', '392', '475', '536', '431', '446', '453', '458', '480', '548', '597', '642', '661', '192', '235', '262', '280', '301', '320', '405', '434', '436', '547', '190', '213', '219', '236', '249', '253', '503', '554', '197', '244', '272', '290', '310', '329', '502', '563', '610', '658', '92', '97', '107', '108', '110', '114', '464', '500', '566', '596', '656', '191', '252', '445', '567', '594', '5', '47', '50', '64', '65', '74', '82', '569', '277', '285', '292', '302', '312', '317', '407', '423', '447', '575', '463', '485', '499', '507', '578', '605', '617', '635', '659', '723', '52', '80', '95', '115', '364', '388', '410', '414', '533', '590', '608', '614', '627', '669', '684', '685', '705', '727', '487', '488', '489', '743', '744', '745', '746', '276', '282', '288', '297', '300', '305', '311', '318', '351', '390', '418', '454', '482', '581', '585', '655', '697', '707', '719', '731', '741', '34', '44', '58', '70', '135', '185', '429', '465', '538', '202', '211', '217', '229', '241', '331', '336', '408', '415', '478', '532', '720']
     df_v_filtrado = df_v_filtrado[df_v_filtrado['NR_SECAO'].isin(secoes)]
     df_p_filtrado = df_p_filtrado[df_p_filtrado['NR_SECAO'].isin(secoes)]
-    st.sidebar.success(f"📍 Exibindo {len(secoes)} secções do Plano Sul.")
 
 elif regiao_selecionada == "Aurenys":
     secoes = ['36', '43', '48', '56', '62', '69', '81', '98', '121', '373', '386', '519', '629', '648', '666', '696', '37', '53', '67', '96', '124', '232', '239', '295', '326', '568', '693', '730']
     df_v_filtrado = df_v_filtrado[df_v_filtrado['NR_SECAO'].isin(secoes)]
     df_p_filtrado = df_p_filtrado[df_p_filtrado['NR_SECAO'].isin(secoes)]
-    st.sidebar.success(f"📍 Exibindo {len(secoes)} secções da região das Aurenys.")
 
 elif regiao_selecionada == "Taquaralto":
     secoes = ['283', '293', '307', '315', '316', '319', '322', '468', '494', '518', '601', '628']
     df_v_filtrado = df_v_filtrado[df_v_filtrado['NR_SECAO'].isin(secoes)]
     df_p_filtrado = df_p_filtrado[df_p_filtrado['NR_SECAO'].isin(secoes)]
-    st.sidebar.success(f"📍 Exibindo as {len(secoes)} secções do CEM Taquaralto.")
 
 elif regiao_selecionada == "Taquari":
     secoes = ['401', '402', '451', '460', '471', '484', '490', '501', '513', '539', '604', '611', '619', '630', '639', '644', '650', '654']
     df_v_filtrado = df_v_filtrado[df_v_filtrado['NR_SECAO'].isin(secoes)]
     df_p_filtrado = df_p_filtrado[df_p_filtrado['NR_SECAO'].isin(secoes)]
-    st.sidebar.success(f"📍 Exibindo as {len(secoes)} secções do Jd. Taquari.")
 
 elif regiao_selecionada == "Taquarucu":
     secoes = ['10', '11', '12', '13', '61', '303', '512', '528']
     df_v_filtrado = df_v_filtrado[df_v_filtrado['NR_SECAO'].isin(secoes)]
     df_p_filtrado = df_p_filtrado[df_p_filtrado['NR_SECAO'].isin(secoes)]
-    st.sidebar.success(f"📍 Exibindo apenas as {len(secoes)} secções de Taquaruçu.")
 
 elif regiao_selecionada == "Buritirana e Zona Rural":
     secoes = ['304', '433', '470', '509', '510', '561']
     df_v_filtrado = df_v_filtrado[df_v_filtrado['NR_SECAO'].isin(secoes)]
     df_p_filtrado = df_p_filtrado[df_p_filtrado['NR_SECAO'].isin(secoes)]
-    st.sidebar.success(f"📍 Exibindo as {len(secoes)} secções da região de Buritirana e Fazendas.")
 
 elif regiao_selecionada == "Bertaville e Acessos":
     secoes = ['93', '130', '172', '173', '174', '175', '176', '177', '178', '179', '180', '181', '183', '330', '342', '357', '378', '411', '541', '675', '735']
     df_v_filtrado = df_v_filtrado[df_v_filtrado['NR_SECAO'].isin(secoes)]
     df_p_filtrado = df_p_filtrado[df_p_filtrado['NR_SECAO'].isin(secoes)]
-    st.sidebar.success(f"📍 Exibindo {len(secoes)} secções do Bertaville e vias de acesso.")
 
 elif regiao_selecionada == "Outros Bairros / Sul Extremo":
     secoes = ['2', '3', '15', '38', '39', '40', '42', '51', '55', '59', '68', '73', '76', '77', '79', '86', '88', '89', '94', '104', '113', '116', '123', '131', '138', '141', '167', '168', '169', '170', '171', '198', '199', '200', '206', '209', '212', '214', '218', '220', '222', '226', '227', '233', '237', '238', '242', '243', '258', '259', '267', '268', '270', '278', '279', '284', '289', '294', '296', '299', '309', '314', '327', '334', '335', '346', '347', '348', '355', '356', '358', '368', '370', '374', '379', '380', '381', '383', '385', '387', '396', '398', '399', '400', '417', '419', '421', '438', '440', '442', '443', '450', '467', '469', '472', '473', '508', '537', '540', '542', '543', '549', '551', '553', '560', '570', '572', '573', '579', '580', '586', '591', '593', '602', '603', '613', '616', '621', '625', '632', '634', '641', '646', '647', '649', '664', '668', '670', '674', '688', '690', '721']
     df_v_filtrado = df_v_filtrado[df_v_filtrado['NR_SECAO'].isin(secoes)]
     df_p_filtrado = df_p_filtrado[df_p_filtrado['NR_SECAO'].isin(secoes)]
-    st.sidebar.success(f"📍 Exibindo {len(secoes)} secções de bairros periféricos e expansão sul.")
 
 if not df_v_filtrado.empty:
     zonas = sorted(df_v_filtrado['NR_ZONA'].unique())
@@ -137,8 +127,8 @@ if not df_v_filtrado.empty:
     df_p_filtrado = df_p_filtrado[df_p_filtrado['NR_LOCAL_VOTACAO'].isin(locais_selecionados)]
 
 if not df_v_filtrado.empty:
-    secoes = sorted(df_v_filtrado['NR_SECAO'].unique())
-    secoes_selecionadas = st.sidebar.multiselect("Secções Específicas:", options=secoes, default=secoes)
+    secoes_disponiveis = sorted(df_v_filtrado['NR_SECAO'].unique())
+    secoes_selecionadas = st.sidebar.multiselect("Secções Específicas:", options=secoes_disponiveis, default=secoes_disponiveis)
     df_v_filtrado = df_v_filtrado[df_v_filtrado['NR_SECAO'].isin(secoes_selecionadas)]
     df_p_filtrado = df_p_filtrado[df_p_filtrado['NR_SECAO'].isin(secoes_selecionadas)]
 
@@ -149,7 +139,7 @@ if df_v_filtrado.empty:
 # ==========================================
 # ESTRUTURA PRINCIPAL (Abas)
 # ==========================================
-aba_resultados, aba_desempenho, aba_perfil = st.tabs(["🗳️ Resultados da Eleição", "🏢 Desempenho e Locais", "👥 Perfil do Eleitorado"])
+aba_resultados, aba_desempenho, aba_analise, aba_perfil = st.tabs(["🗳️ Resultados", "🏢 Locais de Votação", "📈 Análise", "👥 Demografia"])
 
 # ------------------------------------------
 # ABA 1: RESULTADOS DA ELEIÇÃO
@@ -218,18 +208,6 @@ with aba_resultados:
 with aba_desempenho:
     st.subheader("Análise de Desempenho e Concentração de Votos")
     
-    st.markdown("**📉 Desinteresse e Rejeição Eleitoral (Consolidado de todos os cargos)**")
-    
-    votos_brancos = df_v_filtrado[df_v_filtrado['DS_TIPO_VOTAVEL'] == 'Branco']['QT_VOTOS'].sum()
-    votos_nulos = df_v_filtrado[df_v_filtrado['DS_TIPO_VOTAVEL'] == 'Nulo']['QT_VOTOS'].sum()
-    
-    col_abs, col_br, col_nul = st.columns(3)
-    col_abs.metric("Faltosos (Abstenções)", f"{abstencao:,}".replace(',', '.'))
-    col_br.metric("Votos em Branco", f"{votos_brancos:,}".replace(',', '.'))
-    col_nul.metric("Votos Nulos", f"{votos_nulos:,}".replace(',', '.'))
-    
-    st.markdown("---")
-    
     col_partidos, col_logistica = st.columns(2)
     
     with col_partidos:
@@ -267,12 +245,56 @@ with aba_desempenho:
         st.dataframe(ranking_locais, use_container_width=True, height=400)
 
 # ------------------------------------------
-# ABA 3: PERFIL DO ELEITORADO E INCLUSÃO
+# ABA 3: ANÁLISE ESTRATÉGICA (NOVA)
+# ------------------------------------------
+with aba_analise:
+    st.subheader(f"Insights Eleitoral: {regiao_selecionada}")
+    
+  
+    st.markdown("""
+    **🔍 Resumo da Região Central (Plano Diretor)**
+    * **Polarização Executiva:** Voto declaradamente conservador. A direita consolidou ampla maioria para Presidente (cerca de 58% a 62% dos válidos). O engajamento com cargos executivos é altíssimo, refletido num índice de brancos e nulos de apenas ~2.5%.
+    * **Pulverização no Legislativo:** Ao contrário dos distritos, não existe "dono" do voto para deputados na região central. O candidato mais votado para Deputado Estadual (Prof. Junior Geo) liderou com apenas ~8% dos votos válidos.
+    * **Estratégia:** Esta é a região da "votação de opinião". Campanhas aqui devem focar em pautas ideológicas, propostas para infraestrutura urbana e marketing digital forte, pois o voto de "boca de urna" e caciquismo tem baixo impacto.
+    """)
+    
+
+    st.markdown("""
+    **🔍 Resumo de Taquaruçu**
+    * **Hegemonia Distrital:** É um verdadeiro "curral eleitoral". Léo Barbosa arrebatou incríveis **45,5%** de todos os votos válidos para Deputado Estadual na região.
+    * **Baixa Abstenção:** Tem um dos eleitorados mais engajados da cidade, com uma taxa de faltosos de apenas 14,9%.
+    * **Câmara dos Deputados:** A eleição para Federal foi liderada por candidatas com forte elo municipal (Prof. Janad Valcari com 22,9% e Cinthia Ribeiro com 11,1%). O eleitor aqui procura representantes em Brasília que atuem como despachantes do município.
+    * **Estratégia:** Entrar no distrito para cargo de deputado estadual exige desconstrução pesada da base dominante. O voto é muito consolidado através de lideranças comunitárias.
+    """)
+
+    st.markdown("""
+    **🔍 Resumo do Jardim Taquari**
+    * **A Maior Rejeição:** É o setor com o maior distanciamento da política tradicional, registrando impressionantes **19,5% de abstenção** e mais de 11% de brancos/nulos para Deputado Federal.
+    * **Disputa Acirrada:** Diferente do Plano Diretor, a disputa presidencial foi voto a voto aqui (50,2% contra 43,2% para a esquerda). É uma região onde pautas sociais e benefícios assistenciais têm forte apelo.
+    * **Estratégia:** O custo por voto é mais alto devido ao grande número de faltosos e votos nulos. Campanhas no Taquari precisam focar em propostas de transformação local e mobilização intensa de base (vans, fiscais de rua).
+    """)
+
+    st.markdown("""
+    **🔍 Resumo das Aurenys**
+    * **Força Municipal no Parlamento:** A Professora Janad Valcari demonstrou imensa força nesta região (quase 18% dos válidos para Deputado Federal). 
+    * **Voto de Proximidade:** O eleitor das Aurenys dá ampla preferência a candidatos que já foram vereadores ou têm forte presença nos bairros. Políticos "de gabinete" ou de fora da capital têm extrema dificuldade aqui.
+    * **Estratégia:** Para ter sucesso nesta macrorregião, a campanha precisa focar nas calçadas. Reuniões domiciliares, caminhadas em vias comerciais (Av. Tocantins) e parcerias com líderes de bairro são fundamentais.
+    """)
+
+    st.markdown("""
+    **🔍 Resumo de Taquaralto (Centro Sul)**
+    * **Centro Comercial Misto:** Apresenta um perfil híbrido. Tem uma abstenção alta (18,3%), mas a sua veia conservadora para o Executivo Nacional (61% dos válidos) assemelha-se à do Plano Diretor.
+    * **Legislativo Fragmentado:** Vanda Monteiro e Débora Guedes foram as deputadas estaduais mais fortes, mas sem consolidar hegemonia (não passaram de 10%). 
+    * **Estratégia:** Por ser o polo econômico da região sul, propostas voltadas ao comércio, infraestrutura de vias e segurança pública costumam atrair o lojista e o morador da área.
+    """)
+        
+
+# ------------------------------------------
+# ABA 4: PERFIL DO ELEITORADO E INCLUSÃO
 # ------------------------------------------
 with aba_perfil:
     st.subheader("Demografia e Inclusão Social")
     
-    # 1. Cartões de Métricas (KPIs de Inclusão)
     total_eleitores_perfil = df_p_filtrado['QT_ELEITORES'].sum()
     total_pcd = df_p_filtrado['QT_ELEITORES_DEFICIENCIA'].sum()
     total_nome_social = df_p_filtrado['QT_ELEITORES_NOME_SOCIAL'].sum()
@@ -287,19 +309,17 @@ with aba_perfil:
     st.markdown("---")
     
     if total_eleitores_perfil > 0:
-        # Linha 1: Gênero e Identidade de Gênero
         col_gen, col_idgen = st.columns(2)
         with col_gen:
             df_gen = df_p_filtrado.groupby('DS_GENERO')['QT_ELEITORES'].sum().reset_index()
-            fig_gen = px.pie(df_gen, values='QT_ELEITORES', names='DS_GENERO', title='Distribuição por Gênero', hole=0.4, color_discrete_sequence=px.colors.qualitative.Pastel)
+            fig_gen = px.pie(df_gen, values='QT_ELEITORES', names='DS_GENERO', title='Distribuição por Gênero (Gênero Civil)', hole=0.4, color_discrete_sequence=px.colors.qualitative.Pastel)
             st.plotly_chart(fig_gen, use_container_width=True)
         
         with col_idgen:
-                    df_id_gen = df_p_filtrado.groupby('DS_IDENTIDADE_GENERO')['QT_ELEITORES'].sum().reset_index()
-                    fig_idgen = px.pie(df_id_gen, values='QT_ELEITORES', names='DS_IDENTIDADE_GENERO', title='Identidade de Gênero', hole=0.4, color_discrete_sequence=px.colors.qualitative.Set3)
-                    st.plotly_chart(fig_idgen, use_container_width=True)    
+            df_id_gen = df_p_filtrado.groupby('DS_IDENTIDADE_GENERO')['QT_ELEITORES'].sum().reset_index()
+            fig_idgen = px.pie(df_id_gen, values='QT_ELEITORES', names='DS_IDENTIDADE_GENERO', title='Identidade de Gênero (Autodeclaração)', hole=0.4, color_discrete_sequence=px.colors.qualitative.Set3)
+            st.plotly_chart(fig_idgen, use_container_width=True)    
         
-         # Linha 2: Raça/Cor e  Estado Civil
         col_raca, col_ec = st.columns(2)
         with col_raca:
             df_raca = df_p_filtrado.groupby('DS_RACA_COR')['QT_ELEITORES'].sum().reset_index()
@@ -309,11 +329,10 @@ with aba_perfil:
             st.plotly_chart(fig_raca, use_container_width=True)
             
         with col_ec:
-                    df_ec = df_p_filtrado.groupby('DS_ESTADO_CIVIL')['QT_ELEITORES'].sum().reset_index()
-                    fig_ec = px.pie(df_ec, values='QT_ELEITORES', names='DS_ESTADO_CIVIL', title='Estado Civil', hole=0.4)
-                    st.plotly_chart(fig_ec, use_container_width=True)
+            df_ec = df_p_filtrado.groupby('DS_ESTADO_CIVIL')['QT_ELEITORES'].sum().reset_index()
+            fig_ec = px.pie(df_ec, values='QT_ELEITORES', names='DS_ESTADO_CIVIL', title='Estado Civil', hole=0.4)
+            st.plotly_chart(fig_ec, use_container_width=True)
 
-        # Linha 3: Faixa Etária e Escolaridade
         col_idade, col_esc = st.columns(2)
         with col_idade:
             df_idade = df_p_filtrado.groupby('DS_FAIXA_ETARIA')['QT_ELEITORES'].sum().reset_index()
@@ -328,6 +347,3 @@ with aba_perfil:
             fig_esc = px.bar(df_esc, x='QT_ELEITORES', y='DS_GRAU_ESCOLARIDADE', title='Grau de Escolaridade', orientation='h', color_discrete_sequence=['#F58518'])
             fig_esc.update_layout(xaxis_title="Eleitores", yaxis_title="")
             st.plotly_chart(fig_esc, use_container_width=True)
-
-        st.markdown("---")
-        
