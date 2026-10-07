@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import re
+import os
 
 # Configuração inicial da página
 st.set_page_config(page_title="Apuração Eleitoral TSE", layout="wide")
@@ -10,11 +11,25 @@ st.title("📊 Painel de Apuração e Inteligência Eleitoral")
 st.markdown("Consolidação de votos (BU) e análise (Dados Abertos TSE).")
 
 # ==========================================
+# FUNÇÃO PARA ENCONTRAR O ARQUIVO (Evita Erro no Deploy Cloud)
+# ==========================================
+def buscar_arquivo(nome_arquivo):
+    if os.path.exists(f"{nome_arquivo}"):
+        return f"{nome_arquivo}"
+    elif os.path.exists(nome_arquivo):
+        return nome_arquivo
+    return None
+
+# ==========================================
 # CARREGAMENTO DE DADOS
 # ==========================================
 @st.cache_data
 def load_votos():
-    df = pd.read_csv("data/dados_palmas_completo.csv", sep=",", encoding="latin1", low_memory=False)
+    caminho = buscar_arquivo("dados_palmas_completo.csv")
+    if not caminho:
+        raise FileNotFoundError("dados_palmas_completo.csv")
+        
+    df = pd.read_csv(caminho, sep=",", encoding="latin1", low_memory=False)
     cols_numericas = ['QT_VOTOS', 'QT_APTOS', 'QT_COMPARECIMENTO', 'QT_ABSTENCOES']
     for col in cols_numericas:
         if col in df.columns:
@@ -28,7 +43,11 @@ def load_votos():
 
 @st.cache_data
 def load_perfil():
-    df = pd.read_csv("data/dados_perfil_eleitorado_palmas.csv", sep=",", encoding="utf-8", low_memory=False)
+    caminho = buscar_arquivo("dados_perfil_eleitorado_palmas.csv")
+    if not caminho:
+        raise FileNotFoundError("dados_perfil_eleitorado_palmas.csv")
+        
+    df = pd.read_csv(caminho, sep=",", encoding="utf-8", low_memory=False)
     for col in ['NR_ZONA', 'NR_SECAO', 'NR_LOCAL_VOTACAO']:
         if col in df.columns:
             df[col] = df[col].astype(str)
@@ -38,7 +57,7 @@ try:
     df_votos = load_votos()
     df_perfil = load_perfil()
 except FileNotFoundError as e:
-    st.error(f"Ficheiro não encontrado: {e}. Certifique-se de que os arquivos CSV estão dentro da pasta 'data/'.")
+    st.error(f"Ficheiro não encontrado: {e}. Verifique se os arquivos CSV foram enviados para o GitHub corretamente.")
     st.stop()
 
 # Criar dicionário global de mapeamento de escolas
@@ -139,7 +158,7 @@ if df_v_filtrado.empty:
 # ==========================================
 # ESTRUTURA PRINCIPAL (Abas)
 # ==========================================
-aba_resultados, aba_desempenho, aba_analise, aba_perfil = st.tabs(["🗳️ Resultados", "🏢 Locais de Votação", "📈 Análise", "👥 Demografia"])
+aba_resultados, aba_desempenho, aba_analise, aba_perfil = st.tabs(["🗳️ Resultados", "🏢 Locais de Votação", "📈 Análise e Conclusões", "👥 Demografia"])
 
 # ------------------------------------------
 # ABA 1: RESULTADOS DA ELEIÇÃO
@@ -149,7 +168,7 @@ with aba_resultados:
     cargos_selecionados = st.sidebar.multiselect("Cargos (Para Apuração):", options=cargos, default=cargos)
     
     st.sidebar.markdown("---")
-    termo_busca = st.sidebar.text_input("Buscar Candidato (Ex: LULA, 13):")
+    termo_busca = st.sidebar.text_input("Buscar Candidato (Ex: LULA, 22):")
 
     df_secoes_unicas = df_v_filtrado.drop_duplicates(subset=['NR_ZONA', 'NR_SECAO']).copy()
     aptos = df_secoes_unicas['QT_APTOS'].sum()
@@ -245,49 +264,49 @@ with aba_desempenho:
         st.dataframe(ranking_locais, use_container_width=True, height=400)
 
 # ------------------------------------------
-# ABA 3: ANÁLISE ESTRATÉGICA (NOVA)
+# ABA 3: ANÁLISE ESTRATÉGICA (TODAS AS REGIÕES)
 # ------------------------------------------
 with aba_analise:
-    st.subheader(f"Insights Eleitoral: {regiao_selecionada}")
+    st.markdown("""
+    **Navegação Rápida:**  
+    [Plano Diretor Central](#plano-diretor-central) • [Taquaruçu](#taquarucu) • [Jardim Taquari](#jardim-taquari) • [Aurenys](#aurenys) • [Taquaralto](#taquaralto)
+    """)
+    st.divider()
     
-  
+    st.header("Plano Diretor Central", anchor="plano-diretor-central")
     st.markdown("""
-    **🔍 Resumo da Região Central (Plano Diretor)**
-    * **Polarização Executiva:** Voto declaradamente conservador. A direita consolidou ampla maioria para Presidente (cerca de 58% a 62% dos válidos). O engajamento com cargos executivos é altíssimo, refletido num índice de brancos e nulos de apenas ~2.5%.
-    * **Pulverização no Legislativo:** Ao contrário dos distritos, não existe "dono" do voto para deputados na região central. O candidato mais votado para Deputado Estadual (Prof. Junior Geo) liderou com apenas ~8% dos votos válidos.
-    * **Estratégia:** Esta é a região da "votação de opinião". Campanhas aqui devem focar em pautas ideológicas, propostas para infraestrutura urbana e marketing digital forte, pois o voto de "boca de urna" e caciquismo tem baixo impacto.
+    * **Executivo:** Voto fortemente conservador para Presidente (em torno de 60% para Bolsonaro) e pouquíssimos brancos/nulos. 
+    * **Legislativo:** Votação totalmente pulverizada. Nenhum candidato a deputado domina a região (o líder teve só 8%). 
+    * **Como atuar:** É a área do "voto de opinião". Pautas ideológicas, infraestrutura e marketing digital rendem mais que o tradicional corpo a corpo e "caciquismo".
     """)
     
-
+    st.header("Taquaruçu", anchor="taquarucu")
     st.markdown("""
-    **🔍 Resumo de Taquaruçu**
-    * **Hegemonia Distrital:** É um verdadeiro "curral eleitoral". Léo Barbosa arrebatou incríveis **45,5%** de todos os votos válidos para Deputado Estadual na região.
-    * **Baixa Abstenção:** Tem um dos eleitorados mais engajados da cidade, com uma taxa de faltosos de apenas 14,9%.
-    * **Câmara dos Deputados:** A eleição para Federal foi liderada por candidatas com forte elo municipal (Prof. Janad Valcari com 22,9% e Cinthia Ribeiro com 11,1%). O eleitor aqui procura representantes em Brasília que atuem como despachantes do município.
-    * **Estratégia:** Entrar no distrito para cargo de deputado estadual exige desconstrução pesada da base dominante. O voto é muito consolidado através de lideranças comunitárias.
+    * **Legislativo Estadual:** Reduto fechado do Léo Barbosa, que levou mais de 45% dos votos sozinho. Entrar aqui exige desconstruir a base dele.
+    * **Legislativo Federal:** Os eleitores preferiram nomes com forte atuação municipal direta (Janad e Cinthia).
+    * **Como atuar:** O eleitorado é muito engajado (baixa abstenção de 15%), mas o voto obedece muito a lideranças comunitárias bem estabelecidas.
     """)
 
+    st.header("Jardim Taquari", anchor="jardim-taquari")
     st.markdown("""
-    **🔍 Resumo do Jardim Taquari**
-    * **A Maior Rejeição:** É o setor com o maior distanciamento da política tradicional, registrando impressionantes **19,5% de abstenção** e mais de 11% de brancos/nulos para Deputado Federal.
-    * **Disputa Acirrada:** Diferente do Plano Diretor, a disputa presidencial foi voto a voto aqui (50,2% contra 43,2% para a esquerda). É uma região onde pautas sociais e benefícios assistenciais têm forte apelo.
-    * **Estratégia:** O custo por voto é mais alto devido ao grande número de faltosos e votos nulos. Campanhas no Taquari precisam focar em propostas de transformação local e mobilização intensa de base (vans, fiscais de rua).
+    * **Rejeição em alta:** É a região com maior taxa de abstenção (quase 20%) e alto volume de brancos/nulos para deputados. O eleitor aqui está mais distante da política tradicional.
+    * **Disputa:** A eleição presidencial foi a mais acirrada da cidade (Bolsonaro 50% x Lula 43%).
+    * **Como atuar:** Foco em mobilização pesada de rua, logística no dia da eleição e pautas fortemente sociais e assistenciais.
     """)
 
+    st.header("Aurenys", anchor="aurenys")
     st.markdown("""
-    **🔍 Resumo das Aurenys**
-    * **Força Municipal no Parlamento:** A Professora Janad Valcari demonstrou imensa força nesta região (quase 18% dos válidos para Deputado Federal). 
-    * **Voto de Proximidade:** O eleitor das Aurenys dá ampla preferência a candidatos que já foram vereadores ou têm forte presença nos bairros. Políticos "de gabinete" ou de fora da capital têm extrema dificuldade aqui.
-    * **Estratégia:** Para ter sucesso nesta macrorregião, a campanha precisa focar nas calçadas. Reuniões domiciliares, caminhadas em vias comerciais (Av. Tocantins) e parcerias com líderes de bairro são fundamentais.
+    * **Força Local:** Reduto fortíssimo da Janad Valcari para federal (quase 18%). 
+    * **Perfil do Eleitor:** As Aurenys preferem quem tem histórico de trabalho nos bairros, como vereadores e líderes comunitários. Políticos "de gabinete" não vingam.
+    * **Como atuar:** Exige "sola de sapato". Corpo a corpo pesado, reuniões em casas, caminhadas no comércio da Av. Tocantins e alianças de bairro.
     """)
 
+    st.header("Taquaralto", anchor="taquaralto")
     st.markdown("""
-    **🔍 Resumo de Taquaralto (Centro Sul)**
-    * **Centro Comercial Misto:** Apresenta um perfil híbrido. Tem uma abstenção alta (18,3%), mas a sua veia conservadora para o Executivo Nacional (61% dos válidos) assemelha-se à do Plano Diretor.
-    * **Legislativo Fragmentado:** Vanda Monteiro e Débora Guedes foram as deputadas estaduais mais fortes, mas sem consolidar hegemonia (não passaram de 10%). 
-    * **Estratégia:** Por ser o polo econômico da região sul, propostas voltadas ao comércio, infraestrutura de vias e segurança pública costumam atrair o lojista e o morador da área.
+    * **Perfil Misto:** Abstenção alta (18%), mas com voto presidencial majoritariamente conservador (61%), bem parecido com o centro da cidade.
+    * **Legislativo:** Disputa bem diluída. Vanda Monteiro e Débora Guedes foram as mais votadas, mas sem nenhum domínio absoluto (ficaram abaixo de 10%).
+    * **Como atuar:** Por ser o polo econômico do sul da capital, propostas voltadas ao comércio local, infraestrutura e segurança pública têm o maior apelo.
     """)
-        
 
 # ------------------------------------------
 # ABA 4: PERFIL DO ELEITORADO E INCLUSÃO
