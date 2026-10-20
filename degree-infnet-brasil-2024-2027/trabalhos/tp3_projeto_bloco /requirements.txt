@@ -2,3 +2,9 @@ streamlit
 pandas
 requests
 beautifulsoup4
+wordcloud
+matplotlib
+fastapi
+uvicorn
+selenium
+webdriver-manager

@@ -12,6 +12,8 @@ Este documento relaciona as fontes de dados que serão utilizadas ao longo do pr
 | **API de Mapas (OpenStreetMap / ViaCEP)** | Requisição via API Pública | JSON | Obter coordenadas geográficas (Latitude/Longitude) a partir de endereços para plotar doadores e ONGs no dashboard. |
 | **Painel de Doações** | Input do Usuário via Interface Streamlit | Texto e Numérico (Inteiros / Floats) | Receber os dados informados pelo doador: descrição do alimento, quantidade em kg, data de validade e endereço de coleta. |
 | **API de LLM (IA Generativa)** | Requisição via API (Engenharia de Prompts) | Texto (Retorno Estruturado) | Analisar a descrição do alimento doado para categorizá-lo automaticamente (perecível/não perecível) e sugerir cuidados no transporte. |
+| Observatório do 3º Setor (Dinâmico) | Web Scraping (Selenium / WebDriver) | Texto / CSV | Permitir a coleta de dados carregados via JavaScript ou ações assíncronas que o BeautifulSoup não captura, expandindo o volume de dados da base atual. |
+| ConectaFood API (FastAPI) | Requisições HTTP (GET/POST) | JSON | Atuar como backend centralizador, substituindo a leitura crua de arquivos CSV pela aplicação web por chamadas padronizadas, visando escalabilidade futura para o modelo de LLM. |
 
 ---
 *Artefato desenvolvido de acordo com as metodologias ágeis de Ciência de Dados (CRISP-DM e TDSP).*

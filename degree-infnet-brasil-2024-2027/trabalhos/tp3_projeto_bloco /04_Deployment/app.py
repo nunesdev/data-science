@@ -1,103 +1,100 @@
 import streamlit as st
 import pandas as pd
-import os
+import requests
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-import io
 
-# 1. Configuração inicial da página
-st.set_page_config(page_title="ConectaFood - TP2", page_icon="🌱", layout="wide")
+st.set_page_config(page_title="ConectaFood - TP3", page_icon="🌱", layout="wide")
 
-# 2. Implementação de Cache para ganho de performance
-@st.cache_data
-def carregar_dados_iniciais(caminho):
+# URL da API FastAPI (rodando localmente)
+API_URL = "http://localhost:8000"
+CAMINHO_CSV = '../02_Data_Ingestion_Understanding/projetos_sociais.csv'
+
+# Menu de Navegação Lateral
+st.sidebar.title("Navegação")
+pagina = st.sidebar.radio("Ir para:", ["🏠 Home", "📊 Dashboard Analítico", "🔌 Integração API"])
+
+# --- PÁGINA 1: HOME ---
+if pagina == "🏠 Home":
+    st.title("🌱 ConectaFood: Inteligência e Dados para Fome Zero")
+    st.markdown("""
+    Bem-vindo ao **ConectaFood**! Esta plataforma foi evoluída para utilizar múltiplas páginas, 
+    integração via APIs (FastAPI) e coleta de dados dinâmicos (Selenium).
+    
+    **ODS Alinhados:** ODS 2 (Fome Zero) e ODS 12 (Consumo Responsável).
+    """)
+    st.image("https://images.unsplash.com/photo-1593113563332-f144cc7516d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", use_container_width=True)
+
+# --- PÁGINA 2: DASHBOARD ---
+elif pagina == "📊 Dashboard Analítico":
+    st.title("📊 Exploração de ONGs Parceiras")
+    
     try:
-        return pd.read_csv(caminho)
-    except FileNotFoundError:
-        # Retorna um DataFrame vazio com as colunas esperadas caso o arquivo não exista
-        return pd.DataFrame(columns=['Nome', 'Atuação', 'Site', 'Descrição'])
-
-# Carrega os dados coletados via web scraping na TP1
-caminho_csv = '../02_Data_Ingestion_Understanding/projetos_sociais.csv'
-df_inicial = carregar_dados_iniciais(caminho_csv)
-
-# 3. Gerenciamento de Estado de Sessão (Session State)
-if 'dados' not in st.session_state:
-    # Armazena o dataframe inicial na sessão para que não seja resetado a cada interação
-    st.session_state['dados'] = df_inicial
-
-# Interface - Título e Descrição
-st.title("🌱 ConectaFood: Inteligência e Dados para Fome Zero")
-st.markdown("""
-Esta plataforma conecta estabelecimentos com excedente de alimentos a ONGs. 
-**ODS Alinhados:** ODS 2 (Fome Zero) e ODS 12 (Consumo Responsável).
-""")
-
-# 4. Serviço de Upload de Arquivos na Barra Lateral (Interatividade)
-st.sidebar.header("⚙️ Ferramentas de Dados")
-arquivo_upload = st.sidebar.file_uploader("Adicionar novos dados (CSV)", type=["csv"])
-
-if arquivo_upload is not None:
-    try:
-        df_novo = pd.read_csv(arquivo_upload)
-        # Atualiza o estado de sessão concatenando os dados antigos com os novos
-        st.session_state['dados'] = pd.concat([st.session_state['dados'], df_novo], ignore_index=True)
-        st.sidebar.success("Novos dados incorporados com sucesso!")
+        df = pd.read_csv(CAMINHO_CSV)
+        
+        # Filtros
+        atuacoes = df['Atuação'].dropna().unique().tolist()
+        filtro = st.multiselect("Filtre por Atuação:", options=atuacoes, default=atuacoes)
+        df_filtrado = df[df['Atuação'].isin(filtro)]
+        
+        st.dataframe(df_filtrado, use_container_width=True)
+        
+        # Download
+        st.download_button("📥 Baixar Dados Filtrados (CSV)", df_filtrado.to_csv(index=False), "filtrados.csv", "text/csv")
+        
+        # Estatísticas
+        st.header("📈 Insights")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.subheader("Por Atuação")
+            st.bar_chart(df_filtrado['Atuação'].value_counts())
+        with col2:
+            st.subheader("Nuvem de Palavras")
+            textos = " ".join(df_filtrado['Descrição'].dropna().tolist())
+            if textos:
+                wc = WordCloud(width=800, height=400, background_color='white', colormap='Greens').generate(textos)
+                fig, ax = plt.subplots()
+                ax.imshow(wc, interpolation='bilinear')
+                ax.axis('off')
+                st.pyplot(fig)
     except Exception as e:
-        st.sidebar.error(f"Erro ao ler o arquivo: {e}")
+        st.error(f"Erro ao carregar os dados: {e}")
 
-df_atual = st.session_state['dados']
-
-# 5. Interface de Usuário Dinâmica (Filtros interativos)
-st.header("Exploração de ONGs Parceiras")
-if not df_atual.empty:
-    atuacoes_disponiveis = df_atual['Atuação'].dropna().unique().tolist()
-    filtro_atuacao = st.multiselect(
-        "Filtre os projetos pela área de atuação:",
-        options=atuacoes_disponiveis,
-        default=atuacoes_disponiveis
-    )
+# --- PÁGINA 3: INTEGRAÇÃO API ---
+elif pagina == "🔌 Integração API":
+    st.title("🔌 Interação com a API FastAPI")
+    st.markdown("Nesta página, a aplicação não lê o CSV diretamente, ela faz requisições HTTP para a API FastAPI.")
     
-    # Aplica o filtro
-    df_filtrado = df_atual[df_atual['Atuação'].isin(filtro_atuacao)]
-    
-    st.dataframe(df_filtrado, use_container_width=True)
-    
-    # 6. Serviço de Download de Arquivos
-    csv_download = df_filtrado.to_csv(index=False).encode('utf-8')
-    st.download_button(
-        label="📥 Baixar Dados Filtrados (CSV)",
-        data=csv_download,
-        file_name='projetos_filtrados.csv',
-        mime='text/csv'
-    )
-    
-    # 7. Exibição de Estatísticas e Nuvem de Palavras
-    st.header("📈 Insights e Estatísticas")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.subheader("Distribuição por Atuação")
-        # Gráfico de barras simples usando st.bar_chart
-        contagem_atuacao = df_filtrado['Atuação'].value_counts()
-        st.bar_chart(contagem_atuacao)
-        
-    with col2:
-        st.subheader("Nuvem de Palavras das Descrições")
-        textos = " ".join(df_filtrado['Descrição'].dropna().tolist())
-        
-        if textos.strip():
-            # Gera a nuvem de palavras
-            wordcloud = WordCloud(width=800, height=400, background_color='white', colormap='Greens').generate(textos)
+    # GET - Buscar da API
+    if st.button("Buscar Dados da API (GET)"):
+        try:
+            resposta = requests.get(f"{API_URL}/ongs")
+            if resposta.status_code == 200:
+                st.success("Dados recebidos da API!")
+                st.dataframe(pd.DataFrame(resposta.json()))
+            else:
+                st.warning("API não encontrada. Você iniciou o servidor Uvicorn?")
+        except requests.exceptions.ConnectionError:
+            st.error("Falha na conexão. Verifique se o FastAPI está rodando na porta 8000.")
             
-            # Plota usando matplotlib
-            fig, ax = plt.subplots(figsize=(8, 4))
-            ax.imshow(wordcloud, interpolation='bilinear')
-            ax.axis('off')
-            st.pyplot(fig)
-        else:
-            st.info("Não há descrições suficientes para gerar a nuvem de palavras.")
-            
-else:
-    st.warning("Nenhum dado encontrado. Por favor, verifique o arquivo original ou faça o upload de uma nova base.")
+    st.divider()
+    
+    # POST - Enviar para a API
+    st.subheader("Adicionar nova ONG via API (POST)")
+    with st.form("form_api"):
+        nome = st.text_input("Nome da ONG")
+        atuacao = st.text_input("Área de Atuação")
+        site = st.text_input("Site ou Contato")
+        desc = st.text_area("Descrição (O que faz)")
+        submit = st.form_submit_button("Enviar para a API")
+        
+        if submit:
+            payload = {"Nome": nome, "Atuação": atuacao, "Site": site, "Descrição": desc}
+            try:
+                res = requests.post(f"{API_URL}/ongs", json=payload)
+                if res.status_code == 200:
+                    st.success("ONG registrada via API com sucesso!")
+                else:
+                    st.error("Erro ao registrar.")
+            except:
+                st.error("Erro de conexão com a API.")
