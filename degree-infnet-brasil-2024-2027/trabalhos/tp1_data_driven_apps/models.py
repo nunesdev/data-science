@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 
 class UserResponse(BaseModel):
     username: str
-    age: int
+    message: str
 
 
 class UserCreate(BaseModel):
@@ -15,4 +15,4 @@ class UserCreate(BaseModel):
 
 class BirthdayRequest(BaseModel):
     name: str
-    birth_date: date
+    birthday: date

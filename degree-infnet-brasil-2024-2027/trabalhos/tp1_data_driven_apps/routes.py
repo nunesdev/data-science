@@ -8,8 +8,8 @@ from models import BirthdayRequest, UserCreate, UserResponse
 router = APIRouter()
 
 _users: dict[str, UserResponse] = {
-    "bruno": UserResponse(username="bruno", age=37),
-    "bob": UserResponse(username="bob", age=34),
+    "bruno": UserResponse(username="bruno", message="Welcome, bruno!"),
+    "bob": UserResponse(username="bob", message="Welcome, bob!"),
 }
 
 _items: dict[int, dict] = {
@@ -29,11 +29,18 @@ def _validate_item_id(item_id: int) -> None:
         raise InvalidItemIdError(item_id)
 
 
-def _days_until_next_birthday(birth_date: date, today: Optional[date] = None) -> int:
+def _birthday_in_year(year: int, birthday: date) -> date:
+    try:
+        return date(year, birthday.month, birthday.day)
+    except ValueError:
+        return date(year, 2, 28)
+
+
+def _days_until_next_birthday(birthday: date, today: Optional[date] = None) -> int:
     today = today or date.today()
-    next_birthday = date(today.year, birth_date.month, birth_date.day)
+    next_birthday = _birthday_in_year(today.year, birthday)
     if next_birthday < today:
-        next_birthday = date(today.year + 1, birth_date.month, birth_date.day)
+        next_birthday = _birthday_in_year(today.year + 1, birthday)
     return (next_birthday - today).days
 
 
@@ -52,7 +59,10 @@ def get_user(username: str) -> UserResponse:
     user = _users.get(username.lower())
     if user is None:
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
-    return user
+    return UserResponse(
+        username=user.username,
+        message=f"Welcome, {user.username}!",
+    )
 
 
 @router.post("/create-user", response_model=UserResponse, status_code=201)
@@ -60,7 +70,10 @@ def create_user(payload: UserCreate) -> UserResponse:
     key = payload.username.lower()
     if key in _users:
         raise HTTPException(status_code=400, detail="Usuário já existe")
-    user = UserResponse(username=payload.username, age=payload.age)
+    user = UserResponse(
+        username=payload.username,
+        message=f"Welcome, {payload.username}!",
+    )
     _users[key] = user
     return user
 
@@ -84,9 +97,10 @@ def delete_item(item_id: int) -> dict[str, str]:
 
 
 @router.post("/birthday")
-def birthday_countdown(payload: BirthdayRequest) -> dict:
-    days = _days_until_next_birthday(payload.birth_date)
+def birthday_countdown(payload: BirthdayRequest) -> dict[str, str]:
+    days = _days_until_next_birthday(payload.birthday)
     return {
-        "name": payload.name,
-        "days_until_next_birthday": days,
+        "message": (
+            f"Olá, {payload.name}! Faltam {days} dias para o seu próximo aniversário."
+        ),
     }
