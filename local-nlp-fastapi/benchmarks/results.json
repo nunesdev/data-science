@@ -1,0 +1,77 @@
+{
+  "ambiente": {
+    "python": "3.13.2",
+    "plataforma": "macOS-15.7.7-arm64-arm-64bit-Mach-O",
+    "processador": "arm",
+    "nucleos_logicos": 8,
+    "device_inferencia": "CPU (pipeline device=-1 when CUDA unavailable)"
+  },
+  "memoria_mb": {
+    "baseline_antes_carga": 396.5,
+    "pico_durante_teste": 779.3,
+    "delta_aproximado": 382.8
+  },
+  "tempo_carga_modelo_s": 2.35,
+  "repeticoes_por_texto": 3,
+  "amostras": [
+    {
+      "nome_ong": "Associação Antialcoólica do Estado de São Paulo",
+      "tamanho_chars": 148,
+      "latencia_media_ms": 44.94,
+      "latencia_min_ms": 43.87,
+      "latencia_max_ms": 46.01,
+      "estrelas": 4,
+      "confianca": 0.5722330808639526,
+      "resultado": "4 estrelas (positivo)",
+      "truncado": false
+    },
+    {
+      "nome_ong": "Projeto Eu Acredito",
+      "tamanho_chars": 240,
+      "latencia_media_ms": 47.11,
+      "latencia_min_ms": 43.53,
+      "latencia_max_ms": 49.72,
+      "estrelas": 5,
+      "confianca": 0.5019300580024719,
+      "resultado": "5 estrelas (muito positivo)",
+      "truncado": false
+    },
+    {
+      "nome_ong": "Consulado da mulher",
+      "tamanho_chars": 277,
+      "latencia_media_ms": 61.26,
+      "latencia_min_ms": 46.66,
+      "latencia_max_ms": 88.55,
+      "estrelas": 4,
+      "confianca": 0.4902447462081909,
+      "resultado": "4 estrelas (positivo)",
+      "truncado": false
+    },
+    {
+      "nome_ong": "Desaparecidos do Brasil",
+      "tamanho_chars": 345,
+      "latencia_media_ms": 52.01,
+      "latencia_min_ms": 48.18,
+      "latencia_max_ms": 55.52,
+      "estrelas": 4,
+      "confianca": 0.4697823226451874,
+      "resultado": "4 estrelas (positivo)",
+      "truncado": false
+    },
+    {
+      "nome_ong": "Organização Bem-Animal (OBA!)",
+      "tamanho_chars": 494,
+      "latencia_media_ms": 59.21,
+      "latencia_min_ms": 58.31,
+      "latencia_max_ms": 60.28,
+      "estrelas": 4,
+      "confianca": 0.5440199971199036,
+      "resultado": "4 estrelas (positivo)",
+      "truncado": false
+    }
+  ],
+  "latencia_media_global_ms": 52.91,
+  "modelo": "nlptown/bert-base-multilingual-uncased-sentiment",
+  "dataset_csv": "data/projetos_sociais.csv",
+  "linhas_dataset": 49
+}

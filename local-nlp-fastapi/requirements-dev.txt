@@ -1,0 +1,1 @@
+# Optional: benchmark deps are listed in requirements.txt (psutil, httpx).
