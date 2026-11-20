@@ -1,0 +1,12 @@
+streamlit
+pandas
+requests
+beautifulsoup4
+wordcloud
+matplotlib
+fastapi
+uvicorn
+httpx
+psutil
+torch
+transformers
