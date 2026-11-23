@@ -1,0 +1,70 @@
+{
+  "ambiente": {
+    "python": "3.9.6",
+    "plataforma": "macOS-15.7.7-arm64-arm-64bit",
+    "processador": "arm",
+    "nucleos_logicos": 8,
+    "device_inferencia": "CPU (device=-1 no pipeline; CUDA não utilizada)"
+  },
+  "memoria_mb": {
+    "baseline_antes_carga": 315.6,
+    "pico_durante_teste": 707.9,
+    "delta_aproximado": 392.3
+  },
+  "tempo_carga_modelo_s": 1.13,
+  "repeticoes_por_texto": 3,
+  "amostras": [
+    {
+      "nome_ong": "Associação Antialcoólica do Estado de São Paulo",
+      "tamanho_chars": 148,
+      "latencia_media_ms": 68.06,
+      "latencia_min_ms": 65.18,
+      "latencia_max_ms": 70.7,
+      "estrelas": 4,
+      "confianca": 0.5722329616546631,
+      "resultado": "4 estrelas (positivo)"
+    },
+    {
+      "nome_ong": "Projeto Eu Acredito",
+      "tamanho_chars": 240,
+      "latencia_media_ms": 69.49,
+      "latencia_min_ms": 65.29,
+      "latencia_max_ms": 77.42,
+      "estrelas": 5,
+      "confianca": 0.5019301772117615,
+      "resultado": "5 estrelas (muito positivo)"
+    },
+    {
+      "nome_ong": "Consulado da mulher",
+      "tamanho_chars": 277,
+      "latencia_media_ms": 87.4,
+      "latencia_min_ms": 83.87,
+      "latencia_max_ms": 90.76,
+      "estrelas": 4,
+      "confianca": 0.49024462699890137,
+      "resultado": "4 estrelas (positivo)"
+    },
+    {
+      "nome_ong": "Desaparecidos do Brasil",
+      "tamanho_chars": 345,
+      "latencia_media_ms": 114.45,
+      "latencia_min_ms": 109.24,
+      "latencia_max_ms": 119.14,
+      "estrelas": 4,
+      "confianca": 0.46978238224983215,
+      "resultado": "4 estrelas (positivo)"
+    },
+    {
+      "nome_ong": "Organização Bem-Animal (OBA!)",
+      "tamanho_chars": 494,
+      "latencia_media_ms": 176.53,
+      "latencia_min_ms": 153.3,
+      "latencia_max_ms": 193.4,
+      "estrelas": 4,
+      "confianca": 0.5440199971199036,
+      "resultado": "4 estrelas (positivo)"
+    }
+  ],
+  "latencia_media_global_ms": 103.19,
+  "modelo": "nlptown/bert-base-multilingual-uncased-sentiment"
+}
